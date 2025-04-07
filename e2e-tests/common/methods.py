@@ -9,6 +9,7 @@ from common.constants import (
     ANALYZER_BASE_URL,
     IMAGE_REDACTOR_BASE_URL,
 )
+from security import safe_requests
 
 DEFAULT_HEADERS = {"Content-Type": "application/json"}
 MULTIPART_HEADERS = {"Content-Type": "multipart/form-data"}
@@ -27,7 +28,7 @@ def anonymize(data):
 
 
 def anonymizers():
-    response = requests.get(
+    response = safe_requests.get(
         f"{ANONYMIZER_BASE_URL}/anonymizers", headers=DEFAULT_HEADERS
     )
     return response.status_code, response.content
@@ -41,7 +42,7 @@ def analyze(data):
 
 
 def analyzer_supported_entities(data):
-    response = requests.get(
+    response = safe_requests.get(
         f"{ANALYZER_BASE_URL}/supportedentities?{data}", headers=DEFAULT_HEADERS
     )
     return response.status_code, response.content

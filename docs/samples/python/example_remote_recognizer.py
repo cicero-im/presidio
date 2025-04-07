@@ -31,6 +31,7 @@ import requests
 
 from presidio_analyzer import RemoteRecognizer, RecognizerResult
 from presidio_analyzer.nlp_engine import NlpArtifacts
+from security import safe_requests
 
 logger = logging.getLogger("presidio-analyzer")
 
@@ -60,7 +61,7 @@ class ExampleRemoteRecognizer(RemoteRecognizer):
     def load(self) -> None:
         """Call the get_supported_entities API of the external service."""
         try:
-            response = requests.get(
+            response = safe_requests.get(
                 self.supported_entities_url,
                 params={"language": self.supported_language},
             )
