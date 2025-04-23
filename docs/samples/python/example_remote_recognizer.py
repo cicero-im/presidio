@@ -63,7 +63,7 @@ class ExampleRemoteRecognizer(RemoteRecognizer):
             response = requests.get(
                 self.supported_entities_url,
                 params={"language": self.supported_language},
-            )
+            timeout=60)
             self.supported_entities = self._supported_entities_from_response(response)
 
         except requests.exceptions.RequestException as e:

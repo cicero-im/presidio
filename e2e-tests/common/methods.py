@@ -21,29 +21,29 @@ IMAGE_REDACTOR_BASE_URL = os.environ.get(
 
 def anonymize(data):
     response = requests.post(
-        f"{ANONYMIZER_BASE_URL}/anonymize", data=data, headers=DEFAULT_HEADERS
-    )
+        f"{ANONYMIZER_BASE_URL}/anonymize", data=data, headers=DEFAULT_HEADERS, 
+    timeout=60)
     return response.status_code, response.content
 
 
 def anonymizers():
     response = requests.get(
-        f"{ANONYMIZER_BASE_URL}/anonymizers", headers=DEFAULT_HEADERS
-    )
+        f"{ANONYMIZER_BASE_URL}/anonymizers", headers=DEFAULT_HEADERS, 
+    timeout=60)
     return response.status_code, response.content
 
 
 def analyze(data):
     response = requests.post(
-        f"{ANALYZER_BASE_URL}/analyze", data=data, headers=DEFAULT_HEADERS
-    )
+        f"{ANALYZER_BASE_URL}/analyze", data=data, headers=DEFAULT_HEADERS, 
+    timeout=60)
     return response.status_code, response.content
 
 
 def analyzer_supported_entities(data):
     response = requests.get(
-        f"{ANALYZER_BASE_URL}/supportedentities?{data}", headers=DEFAULT_HEADERS
-    )
+        f"{ANALYZER_BASE_URL}/supportedentities?{data}", headers=DEFAULT_HEADERS, 
+    timeout=60)
     return response.status_code, response.content
 
 
@@ -52,18 +52,18 @@ def redact(file, color_fill=None, json_payload=False):
     if json_payload:
         json_string = '{"image": "' + base64.b64encode(file.read()).decode("utf-8") + '"}'
         response = requests.post(
-            f"{IMAGE_REDACTOR_BASE_URL}/redact", json=json.loads(json_string), headers=DEFAULT_HEADERS
-        )
+            f"{IMAGE_REDACTOR_BASE_URL}/redact", json=json.loads(json_string), headers=DEFAULT_HEADERS, 
+        timeout=60)
     else:
         response = requests.post(
-        f"{IMAGE_REDACTOR_BASE_URL}/redact", files=__get_multipart_form_data(file), data=payload)
+        f"{IMAGE_REDACTOR_BASE_URL}/redact", files=__get_multipart_form_data(file), data=payload, timeout=60)
     return response
 
 
 def deanonymize(data):
     response = requests.post(
-        f"{ANONYMIZER_BASE_URL}/deanonymize", data=data, headers=DEFAULT_HEADERS
-    )
+        f"{ANONYMIZER_BASE_URL}/deanonymize", data=data, headers=DEFAULT_HEADERS, 
+    timeout=60)
     return response.status_code, response.content
 
 
